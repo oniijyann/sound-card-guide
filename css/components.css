@@ -1,0 +1,508 @@
+/* ============================================
+   components.css — 组件样式
+   ============================================ */
+
+/* --- 章节标题 --- */
+.section {
+  margin-bottom: var(--space-2xl);
+  scroll-margin-top: var(--space-lg);
+}
+
+.section-title {
+  font-size: var(--font-xl);
+  font-weight: 700;
+  color: var(--accent);
+  padding-bottom: var(--space-sm);
+  border-bottom: 2px solid var(--border);
+  margin-bottom: var(--space-xl);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.section-title .section-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--bg-primary);
+  font-size: var(--font-md);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.subsection-title {
+  font-size: var(--font-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-md);
+  scroll-margin-top: var(--space-lg);
+}
+
+/* --- 前言卡片 --- */
+.intro-cards {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.intro-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  transition: var(--transition);
+}
+
+.intro-card:hover {
+  border-left-color: var(--accent-hover);
+  background: var(--bg-tertiary);
+}
+
+.intro-card p {
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* --- 沟通清单卡片 --- */
+.checklist {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.checklist-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.checklist-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-lg);
+  font-size: var(--font-md);
+  font-weight: 600;
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+}
+
+.checklist-header .icon {
+  color: var(--accent);
+  font-size: 1.1em;
+  flex-shrink: 0;
+}
+
+.checklist-body {
+  padding: var(--space-md) var(--space-lg);
+}
+
+.checklist-body > p {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-sm);
+}
+
+.checklist-body > p:last-child {
+  margin-bottom: 0;
+}
+
+/* --- 步骤块 --- */
+.step {
+  position: relative;
+  margin-bottom: var(--space-xl);
+  scroll-margin-top: var(--space-lg);
+}
+
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--bg-primary);
+  font-size: var(--font-sm);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.step-title {
+  font-size: var(--font-md);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.step-content {
+  padding-left: calc(32px + var(--space-md));
+}
+
+.step-content > p {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-sm);
+  line-height: 1.7;
+}
+
+.step-content > p:last-child {
+  margin-bottom: 0;
+}
+
+/* --- 列表样式 --- */
+.bullet-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin: var(--space-sm) 0;
+}
+
+.bullet-list li {
+  position: relative;
+  padding-left: 1.25rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.bullet-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent-muted);
+}
+
+/* 子列表 */
+.bullet-list .bullet-list {
+  margin: var(--space-xs) 0;
+}
+
+/* --- Callout 提示框 --- */
+.callout {
+  border-radius: var(--radius-md);
+  padding: var(--space-md) var(--space-lg);
+  margin: var(--space-md) 0;
+  border-left: 4px solid;
+  font-size: var(--font-sm);
+  line-height: 1.7;
+}
+
+.callout-tip {
+  background: var(--tip-bg);
+  border-color: var(--tip-color);
+  color: var(--tip-color);
+}
+
+.callout-warning {
+  background: var(--warning-bg);
+  border-color: var(--warning-color);
+  color: var(--warning-color);
+}
+
+.callout-important {
+  background: var(--important-bg);
+  border-color: var(--important-color);
+  color: var(--important-color);
+}
+
+.callout strong {
+  font-weight: 600;
+}
+
+/* --- 设备知识卡片 --- */
+.knowledge-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-lg);
+}
+
+.knowledge-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+}
+
+.knowledge-card h3 {
+  font-size: var(--font-md);
+  color: var(--accent);
+  margin-bottom: var(--space-md);
+}
+
+.knowledge-card .bullet-list li {
+  color: var(--text-secondary);
+}
+
+/* --- 试唱轮次 --- */
+.round {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-md);
+  scroll-margin-top: var(--space-lg);
+}
+
+.round-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.round-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--accent-muted);
+  color: var(--bg-primary);
+  font-size: var(--font-xs);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.round-title {
+  font-size: var(--font-md);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.round-content p {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-sm);
+  line-height: 1.7;
+}
+
+.round-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* --- DAW 效果轨 --- */
+.track-block {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-md);
+  overflow: hidden;
+}
+
+.track-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-lg);
+  background: var(--bg-tertiary);
+  font-size: var(--font-md);
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.track-body {
+  padding: var(--space-md) var(--space-lg);
+}
+
+.effect-group {
+  margin-bottom: var(--space-md);
+}
+
+.effect-group:last-child {
+  margin-bottom: 0;
+}
+
+.effect-group h4 {
+  font-size: var(--font-base);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xs);
+}
+
+.effect-group p {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: var(--space-xs);
+}
+
+.effect-group p:last-child {
+  margin-bottom: 0;
+}
+
+/* --- 可折叠块 --- */
+.collapse-block {
+  border-top: 1px solid var(--border);
+}
+
+.collapse-block:first-child {
+  border-top: none;
+}
+
+.collapse-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--space-md) 0;
+  text-align: left;
+  font-size: var(--font-base);
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: var(--transition);
+}
+
+.collapse-toggle:hover {
+  color: var(--accent);
+}
+
+.collapse-toggle .toggle-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  transition: transform 0.25s ease;
+  font-size: 0.8em;
+}
+
+.collapse-block.open .toggle-icon {
+  transform: rotate(90deg);
+}
+
+.collapse-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+.collapse-block.open .collapse-content {
+  max-height: 2000px;
+}
+
+.collapse-inner {
+  padding-bottom: var(--space-md);
+}
+
+.collapse-inner > p {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-sm);
+  line-height: 1.7;
+}
+
+.collapse-inner > p:last-child {
+  margin-bottom: 0;
+}
+
+/* --- 备份清单 --- */
+.backup-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.backup-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-lg);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.backup-item .check-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--accent-muted);
+  border-radius: 4px;
+  margin-top: 2px;
+  transition: var(--transition);
+}
+
+.backup-item:hover .check-icon {
+  border-color: var(--accent);
+}
+
+.backup-item .text {
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* --- 过渡说明（步骤间的衔接文字）--- */
+.transition-note {
+  padding: var(--space-sm) var(--space-md);
+  margin: var(--space-md) 0;
+  border-left: 3px solid var(--accent-muted);
+  color: var(--text-muted);
+  font-size: var(--font-sm);
+  font-style: italic;
+  line-height: 1.7;
+}
+
+/* --- 段落通用 --- */
+.content p {
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.content > section > p {
+  margin-bottom: var(--space-sm);
+}
+
+/* --- 响应式微调 --- */
+@media (max-width: 767px) {
+  .section-title {
+    font-size: var(--font-lg);
+  }
+
+  .subsection-title {
+    font-size: var(--font-md);
+  }
+
+  .step-content {
+    padding-left: 0;
+  }
+
+  .step-header {
+    margin-bottom: var(--space-sm);
+  }
+
+  .knowledge-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .round,
+  .track-body,
+  .checklist-body,
+  .checklist-header {
+    padding: var(--space-md);
+  }
+
+  .intro-card {
+    padding: var(--space-md);
+  }
+
+  .callout {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .backup-item {
+    padding: var(--space-sm) var(--space-md);
+  }
+}

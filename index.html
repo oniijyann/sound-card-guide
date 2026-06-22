@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>声卡调试指南</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+  <!-- 顶部阅读进度条 -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- 移动端导航按钮 -->
+  <button class="nav-toggle" id="navToggle" aria-label="打开目录">☰</button>
+
+  <!-- 移动端遮罩 -->
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <div class="layout">
+
+    <!-- ====== 侧边栏目录 ====== -->
+    <aside class="sidebar" id="sidebar">
+      <nav class="toc">
+        <h2 class="toc-title">声卡调试指南</h2>
+        <ul>
+          <li><a href="#preface">前言</a></li>
+          <li><a href="#pre-communication">调试前沟通</a></li>
+          <li><a href="#software-config">软件安装与配置</a>
+            <ul>
+              <li><a href="#step-connect">1. 设备连接</a></li>
+              <li><a href="#step-remote">2. 远程控制</a></li>
+              <li><a href="#step-driver">3. 驱动安装</a></li>
+              <li><a href="#step-install">4. 软件安装</a></li>
+              <li><a href="#step-routing">5. 音频信号路由</a></li>
+              <li><a href="#step-optimize">6. 电脑优化</a></li>
+            </ul>
+          </li>
+          <li><a href="#device-knowledge">设备知识教学</a></li>
+          <li><a href="#trial-debug">试唱与调试</a>
+            <ul>
+              <li><a href="#trial-rounds">试唱流程</a></li>
+              <li><a href="#daw-effects">DAW 效果调试</a></li>
+              <li><a href="#daw-teaching">DAW 操作教学</a></li>
+              <li><a href="#pre-stream-check">开播前检查</a></li>
+            </ul>
+          </li>
+          <li><a href="#backup">备份</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- ====== 主内容区 ====== -->
+    <main class="content">
+
+      <!-- ============================================
+           第一章：前言
+           ============================================ -->
+      <section class="section" id="preface">
+        <h2 class="section-title"><span class="section-num">1</span>前言</h2>
+        <div class="intro-cards">
+          <div class="intro-card">
+            <p>麦克风和声卡设计的目标不是为了把声音变好听，而是为了更精准地还原声音，获得更好的信噪比。让你声音有变化的是音频处理软件（DAW）里使用的各种插件。</p>
+          </div>
+          <div class="intro-card">
+            <p>声卡调试不能让你声音有非常大的改变，也不能让你演唱的节奏和音准更好，更不能让你唱歌能和某某一样。声卡调试的主要工作内容是能让小白快速获得一份自己比较满意的声音。</p>
+          </div>
+          <div class="intro-card">
+            <p>B 站是个巨大的知识宝库，喜欢深入研究的找找教程，你也可以调出自己想要的声音。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           第二章：调试前沟通
+           ============================================ -->
+      <section class="section" id="pre-communication">
+        <h2 class="section-title"><span class="section-num">2</span>调试前沟通</h2>
+
+        <div class="checklist">
+
+          <!-- 费用 -->
+          <div class="checklist-card">
+            <div class="checklist-header">
+              <span class="icon">💰</span>明确调试费用
+            </div>
+            <div class="checklist-body">
+              <p>明确调试声卡的费用，确认是否有额外收费，以及后续问题如何解决。</p>
+            </div>
+          </div>
+
+          <!-- 直播内容类型 -->
+          <div class="checklist-card">
+            <div class="checklist-header">
+              <span class="icon">🎵</span>明确直播内容类型
+            </div>
+            <div class="checklist-body">
+              <p>了解客户的直播内容类型：唱歌、乐器演奏、唱跳等。这主要为了后续麦克风和声卡选择做参考。</p>
+            </div>
+          </div>
+
+          <!-- 声卡和麦克风型号 -->
+          <div class="checklist-card">
+            <div class="checklist-header">
+              <span class="icon">🎤</span>明确声卡和麦克风型号
+            </div>
+            <div class="checklist-body">
+              <ul class="bullet-list">
+                <li>有些娱乐声卡不支持 ASIO 驱动，那些直接用声卡自带的效果就好，不需要调。</li>
+                <li>方便找到对应的声卡驱动，还可以提前找到产品图，方便后续声卡和麦克风的基本使用教学。</li>
+                <li>如需多个麦克风或有乐器（电钢琴、电吉他），要注意声卡是否有相应的接口。</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- 配件确认 -->
+          <div class="checklist-card">
+            <div class="checklist-header">
+              <span class="icon">🔌</span>明确其他配件是否齐全
+            </div>
+            <div class="checklist-body">
+
+              <!-- OTG 线 -->
+              <div class="collapse-block" data-default="collapsed">
+                <button class="collapse-toggle">
+                  <span>手机直播：OTG 接口与 OTG 线</span>
+                  <span class="toggle-icon">▶</span>
+                </button>
+                <div class="collapse-content">
+                  <div class="collapse-inner">
+                    <p>如果是用手机直播的，需要声卡有 OTG 接口加 OTG 线。</p>
+                    <ul class="bullet-list">
+                      <li>没有 OTG 接口的声卡需要音频转换器（直播一号之类的产品）。</li>
+                      <li>注意 OTG 线接充电器最好用原装充电器，不要接那种很多插口的分线器。</li>
+                      <li>最好直接在买声卡的店铺买 OTG 线，或者问清楚店家是否有特殊要求，不兼容普通的 OTG 线。</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 麦克风支架 -->
+              <div class="collapse-block" data-default="collapsed">
+                <button class="collapse-toggle">
+                  <span>麦克风支架</span>
+                  <span class="toggle-icon">▶</span>
+                </button>
+                <div class="collapse-content">
+                  <div class="collapse-inner">
+                    <p>建议在声卡调试前就安装好。</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 卡农线 -->
+              <div class="collapse-block" data-default="collapsed">
+                <button class="collapse-toggle">
+                  <span>声卡连接麦克风的卡农线</span>
+                  <span class="toggle-icon">▶</span>
+                </button>
+                <div class="collapse-content">
+                  <div class="collapse-inner">
+                    <p>确认卡农线齐全，能正常连接声卡与麦克风。</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 耳机 -->
+              <div class="collapse-block" data-default="collapsed">
+                <button class="collapse-toggle">
+                  <span>耳机</span>
+                  <span class="toggle-icon">▶</span>
+                </button>
+                <div class="collapse-content">
+                  <div class="collapse-inner">
+                    <ul class="bullet-list">
+                      <li>注意有些声卡是 6.35 接口的，对应 3.5 接口的耳机需要个转接头（一般买声卡都会送）。</li>
+                      <li>如果声卡距离人比较远，还需要个耳机延长线。</li>
+                      <li>不建议使用无线耳机：有延迟，且需要充电。</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 电脑 -->
+              <div class="collapse-block" data-default="collapsed">
+                <button class="collapse-toggle">
+                  <span>电脑</span>
+                  <span class="toggle-icon">▶</span>
+                </button>
+                <div class="collapse-content">
+                  <div class="collapse-inner">
+                    <p>确认好声卡与电脑的接口：</p>
+                    <ul class="bullet-list">
+                      <li>USB</li>
+                      <li>PCIE</li>
+                      <li>雷电</li>
+                      <li>注意 USB 接口建议用独立的 USB，不要使用 USB 集线器与其他设备共用。</li>
+                      <li>不同声卡的接口不同，需要电脑有对应的接口和对应的连接线。</li>
+                    </ul>
+                    <p>只要不是很久之前买的电脑，且是 Win10 以上的电脑都可以。</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- 时间约定 -->
+          <div class="checklist-card">
+            <div class="checklist-header">
+              <span class="icon">🕐</span>约定调试时间
+            </div>
+            <div class="checklist-body">
+              <p>约定调试时间，并告知客户大概需要调试多久。</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ============================================
+           第三章：软件安装与配置
+           ============================================ -->
+      <section class="section" id="software-config">
+        <h2 class="section-title"><span class="section-num">3</span>调试：软件安装与配置</h2>
+
+        <!-- Step 1: 设备连接 -->
+        <div class="step" id="step-connect">
+          <div class="step-header">
+            <span class="step-number">1</span>
+            <span class="step-title">设备连接</span>
+          </div>
+          <div class="step-content">
+            <p>指导客户将声卡连接电脑和麦克风。一般声卡详情页或者说明书都有，看一下都可以完成的。</p>
+            <div class="callout callout-warning">
+              <strong>注意：</strong>声卡不要放在电脑机箱上，也尽量远离各种电子设备，离太近可能会造成干扰。关闭声卡上的硬件监听。
+            </div>
+
+            <div class="collapse-block" data-default="collapsed">
+              <button class="collapse-toggle">
+                <span>设备接线细节</span>
+                <span class="toggle-icon">▶</span>
+              </button>
+              <div class="collapse-content">
+                <div class="collapse-inner">
+                  <p>注意麦克风类别：</p>
+                  <ul class="bullet-list">
+                    <li>动圈麦</li>
+                    <li>电容麦——需 48V 供电</li>
+                    <li>无线麦要注意接收器频段是否与麦克风相符，有时频道不匹配也会有声，但有杂音。</li>
+                  </ul>
+                  <p>如果有乐器或者话放等设备，需注意接口的电平级。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: 远程控制 -->
+        <div class="step" id="step-remote">
+          <div class="step-header">
+            <span class="step-number">2</span>
+            <span class="step-title">远程控制</span>
+          </div>
+          <div class="step-content">
+            <p>请客户下载远程控制软件（ToDesk 或者向日葵），安装后打开软件，将软件显示的号码发给调试人员。</p>
+            <p>调试人员远程连接控制电脑，下面操作交给调试人员就好了。</p>
+          </div>
+        </div>
+
+        <!-- Step 3: 驱动安装 -->
+        <div class="step" id="step-driver">
+          <div class="step-header">
+            <span class="step-number">3</span>
+            <span class="step-title">驱动安装</span>
+          </div>
+          <div class="step-content">
+            <ul class="bullet-list">
+              <li>如之前已经装过声卡驱动且有调试过，需备份之前的文件，方便后期需求回到之前的状态。</li>
+              <li>去声卡官网找到对应驱动并安装（有的声卡安装驱动后需要重启电脑）。</li>
+              <li>打开声卡驱动面板，一般将声卡采样率调整至 44100，缓冲区大小调整至 128（电脑比较好的可以调更小）。</li>
+              <li>声卡上麦克风（电容麦）增益旋钮调整至 12 点位置，并且确认麦克风轨道有波形即可。</li>
+            </ul>
+
+            <div class="collapse-block" data-default="collapsed">
+              <button class="collapse-toggle">
+                <span>Windows 声音设置（6 项）</span>
+                <span class="toggle-icon">▶</span>
+              </button>
+              <div class="collapse-content">
+                <div class="collapse-inner">
+                  <ul class="bullet-list">
+                    <li>Windows 声音设置里各个通道都改成 44100 采样。改采样率旁边有个测试的按钮，可以点一下以确认客户耳机可以听到声音。</li>
+                    <li>Windows 声音设置里"播放"选项卡中，将默认通道设置为声卡的硬件通道（耳机）。</li>
+                    <li>取消独占模式和各种增强模式。</li>
+                    <li>Windows 声音设置里"录制"选项卡中，将默认通道设置为声卡声音输出的通道（不同声卡情况不同）。</li>
+                    <li>Windows 声音设置—"通信"选项卡里改成"不执行任何操作"。</li>
+                    <li>禁用掉其他无关的通道。</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: 软件安装 -->
+        <div class="step" id="step-install">
+          <div class="step-header">
+            <span class="step-number">4</span>
+            <span class="step-title">软件安装</span>
+          </div>
+          <div class="step-content">
+            <p>询问客户需要什么音乐软件。常用音乐软件有 QQ 音乐、全民 K 歌、酷狗音乐等等。然后就可以开始 DAW、音乐软件、各种插件的安装和设置，这段时间可以请客户去休息 10-20 分钟。</p>
+
+            <p>通过百度网盘或者远程软件把插件和 DAW 安装包下载到电脑里，并安装。</p>
+
+            <div class="collapse-block" data-default="collapsed">
+              <button class="collapse-toggle">
+                <span>DAW 选择</span>
+                <span class="toggle-icon">▶</span>
+              </button>
+              <div class="collapse-content">
+                <div class="collapse-inner">
+                  <ul class="bullet-list">
+                    <li>Studio One</li>
+                    <li>Cubase</li>
+                    <li>MonsterAudio（免费）</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="collapse-block" data-default="collapsed">
+              <button class="collapse-toggle">
+                <span>插件选择</span>
+                <span class="toggle-icon">▶</span>
+              </button>
+              <div class="collapse-content">
+                <div class="collapse-inner">
+                  <p>列举一些比较常用的插件：FabFilter、Waves、Valhalla、板岩、恐龙、插件联盟。</p>
+                  <div class="callout callout-important">
+                    <strong>关键原则：</strong>什么插件其实无所谓，注意要选 0 延迟或者低延迟的，不然监听有延迟会影响唱歌。
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p>下载安装客户需求的音乐软件，安装完成后需设置到对应的伴奏轨道。</p>
+            <p>安装 YY 或者 Sonobus（用于远程监听客户声音）。</p>
+          </div>
+        </div>
+
+        <!-- Step 5: 音频信号路由 -->
+        <div class="step" id="step-routing">
+          <div class="step-header">
+            <span class="step-number">5</span>
+            <span class="step-title">音频信号路由</span>
+          </div>
+          <div class="step-content">
+
+            <!-- 5a 声卡路由 -->
+            <h4 style="color:var(--text-primary);font-size:var(--font-base);margin-bottom:var(--space-xs);">声卡音频信号路由</h4>
+            <div class="collapse-block" data-default="collapsed">
+              <button class="collapse-toggle">
+                <span>设置详情</span>
+                <span class="toggle-icon">▶</span>
+              </button>
+              <div class="collapse-content">
+                <div class="collapse-inner">
+                  <ul class="bullet-list">
+                    <li>不同声卡多少都有些区别，需根据具体声卡去设置。</li>
+                    <li>新建一个或者打开制作好的 DAW 工程文件模板（如有）。</li>
+                    <li>DAW 中路由设置：就是把声卡的通道连接进 DAW 处理后再输出。</li>
+                  </ul>
+                  <div class="callout callout-tip">
+                    <strong>检查项：</strong>注意检查"高级选项 → 控制台 → 提示混响静音跟随通道"勾选上。
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 5b 音乐软件通道 -->
+            <h4 style="color:var(--text-primary);font-size:var(--font-base);margin:var(--space-md) 0 var(--space-xs);">音乐软件播放通道设置</h4>
+            <div class="collapse-block" data-default="collapsed">
+              <button class="collapse-toggle">
+                <span>设置详情</span>
+                <span class="toggle-icon">▶</span>
+              </button>
+              <div class="collapse-content">
+                <div class="collapse-inner">
+                  <ul class="bullet-list">
+                    <li>将播放通道设置到与 DAW 伴奏通道一致。</li>
+                    <li>全民 K 歌有通道独占的问题，建议声卡有多余通道的，单独给它设置一条通道。且全民 K 歌中的麦克风通道要单独设置一路，不要与主输出通道一路，因为它会降低到 80% 的音量。并且在 Windows 音频设备播放通道选择对应通道。</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- 5c 直播软件通道 -->
+            <h4 style="color:var(--text-primary);font-size:var(--font-base);margin:var(--space-md) 0 var(--space-xs);">直播软件通道设置</h4>
+            <div class="collapse-block" data-default="collapsed">
+              <button class="collapse-toggle">
+                <span>设置详情</span>
+                <span class="toggle-icon">▶</span>
+              </button>
+              <div class="collapse-content">
+                <div class="collapse-inner">
+                  <p>直播软件的麦克风设置选从 DAW 的总输出通道。</p>
+                  <p>直播软件的扬声器：</p>
+                  <ul class="bullet-list">
+                    <li>一般直接选声卡的耳机硬件通道。</li>
+                    <li>通道多的，也可以单独在 DAW 里建立一条轨道，不发送给总输出，只发送给耳机。</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Step 6: 电脑优化 -->
+        <div class="step" id="step-optimize">
+          <div class="step-header">
+            <span class="step-number">6</span>
+            <span class="step-title">电脑优化设置</span>
+          </div>
+          <div class="step-content">
+            <div class="collapse-block" data-default="collapsed">
+              <button class="collapse-toggle">
+                <span>优化项目（6 项）</span>
+                <span class="toggle-icon">▶</span>
+              </button>
+              <div class="collapse-content">
+                <div class="collapse-inner">
+                  <ul class="bullet-list">
+                    <li>设备管理器中把 USB 根集线器设备休眠禁用。</li>
+                    <li>电源方案要选高性能，并且把"USB 设置 → USB 选择性暂停设置"设为禁用；"硬盘 → 在此时间后关闭硬盘"设为 0 分钟。</li>
+                    <li>电源选项里，找到"定义电源按钮并启动密码保护"，里边有个"启用快速启动"，这个要关掉！尤其笔记本用户。</li>
+                    <li>如还有噼啪声，可以考虑把声卡驱动和 DAW 的运算优先级调到"实时"（可使用 Process Lasso 一直设置），或者增大声卡缓冲区大小。</li>
+                    <li>Win11 系统在 Studio One 6 上可能出现杂音，需用 Process Lasso 或 CoreDirectors 把程序设置到只在大核上运行。</li>
+                    <li>如上述设置还不能避免噼啪声，那还要根据电脑硬件去寻找原因。比较新的声卡和电脑一般不会有这个问题。</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="transition-note">完成上述设置后就可让客户回来继续。</p>
+
+      </section>
+
+      <!-- ============================================
+           第四章：设备知识教学
+           ============================================ -->
+      <section class="section" id="device-knowledge">
+        <h2 class="section-title"><span class="section-num">4</span>简单的设备知识教学</h2>
+
+        <div class="knowledge-grid">
+
+          <!-- 麦克风 -->
+          <div class="knowledge-card">
+            <h3>🎤 麦克风基础</h3>
+            <ul class="bullet-list">
+              <li>介绍心形指向。如果麦克风上有功能开关，可结合产品图片告知客户其功能并指导选择正确位置。常见开关有：底切开关、指向性选择、衰减开关。</li>
+              <li>嘴一般正对麦克风振膜。</li>
+              <li>嘴与麦克风距离建议 15-25cm（两拳）。</li>
+              <li>如嫌弃挡脸，可把麦克风的振膜对准嘴的前提下，移动到其他位置也可。</li>
+              <li>风扇和空调不要对着麦克风吹。</li>
+              <li>麦克风尽量远离噪声源，利用心形指向避开直接对着噪音源。</li>
+            </ul>
+          </div>
+
+          <!-- 声卡 -->
+          <div class="knowledge-card">
+            <h3>🎚️ 声卡基础</h3>
+            <ul class="bullet-list">
+              <li>告知麦克风增益旋钮是哪个。</li>
+              <li>告知耳机音量旋钮是哪个。</li>
+              <li>告知硬件监听是哪个。</li>
+              <li>一般声卡详情页或者说明书都有图片说明。</li>
+            </ul>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ============================================
+           第五章：试唱与调试
+           ============================================ -->
+      <section class="section" id="trial-debug">
+        <h2 class="section-title"><span class="section-num">5</span>试唱与调试</h2>
+
+        <!-- ====== 试唱流程 ====== -->
+        <h3 class="subsection-title" id="trial-rounds">试唱流程</h3>
+        <p style="margin-bottom:var(--space-lg);">通过 YY 或者 Sonobus 监听客户从 DAW 总线出来的声音。整个试唱过程通过多轮迭代，逐步调整音量和效果。</p>
+
+        <!-- 第一次试唱 -->
+        <div class="round" id="round-1">
+          <div class="round-header">
+            <span class="round-badge">第 1 轮</span>
+            <span class="round-title">初次试唱与问题排查</span>
+          </div>
+          <div class="round-content">
+            <ul class="bullet-list">
+              <li>电容麦建议把麦克风增益扭到 12 点钟方向。</li>
+              <li>一般大声说话时电平能冲到 -6dBfs，但不超过 0；不说话时底噪不超过 -48dBfs。</li>
+              <li>让客户咳一下，电平表没超过 0 就行（每个声卡的最大输入电平不一样，如果音量较小，后边使用数字增益增大音量即可）。</li>
+              <li>如可以，也可以让客户先开嗓。</li>
+              <li>让客户带伴奏唱一小段副歌，几句即可。请客户随时调整耳机音量来听清自己声音，能正常舒适地唱下来即可，不需要很精确。</li>
+              <li>唱的时候需录下来。</li>
+              <li>可以适当加少量混响。</li>
+            </ul>
+            <div class="callout callout-tip">
+              <strong>听录音判断是否有明显的问题并解决：</strong>
+              <ul class="bullet-list" style="margin-top:var(--space-xs);">
+                <li>声音过大或过小</li>
+                <li>是否有明显的底噪</li>
+                <li>是否有近讲效应</li>
+                <li>房间反射声特别大</li>
+                <li>最基本的原则是不能爆音，且应有部分余量</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 第二次试唱 -->
+        <div class="round" id="round-2">
+          <div class="round-header">
+            <span class="round-badge">第 2 轮</span>
+            <span class="round-title">录制与初步调试</span>
+          </div>
+          <div class="round-content">
+            <ul class="bullet-list">
+              <li>通过前边的调整和问题解决后，录制一首熟悉的歌，只录一遍主歌加副歌即可。</li>
+              <li>然后根据录好的歌进行调试。</li>
+              <li>经过调整后，整体音量会变大。请客户调整声卡上耳机音量旋钮，调到音量刚好合适即可，不需要很精确。</li>
+              <li>听录音，根据客户的反馈进一步调整。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 第三次试唱 -->
+        <div class="round" id="round-3">
+          <div class="round-header">
+            <span class="round-badge">第 3 轮</span>
+            <span class="round-title">带效果验证与反馈</span>
+          </div>
+          <div class="round-content">
+            <ul class="bullet-list">
+              <li>请客户带着刚才调试好的效果再唱一首（最好是同类型的歌曲）。</li>
+              <li>此次演唱需要客户根据人声在耳机中的大小去调整耳机音量，可以一边唱一边调，目标是能正常舒服地演唱。</li>
+              <li>同时可以询问混响大小是否合适，是否会影响演唱。混响过大可能会影响听不清自己声音。</li>
+              <li>客户可能无法对于效果说出明确的要求，但对于人声、伴奏、混响的音量一般都可以表达出是大了还是小了的反馈，所以可以多试试不同音量，让客户给出反馈。</li>
+              <li>听录音，根据客户的反馈进一步调整。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 第四次试唱 -->
+        <div class="round" id="round-4">
+          <div class="round-header">
+            <span class="round-badge">第 4 轮+</span>
+            <span class="round-title">多曲验证与最终确认</span>
+          </div>
+          <div class="round-content">
+            <p>可以多试几首歌。声音效果是一方面，另外一方面是需要演唱者在演唱过程中听自己的音量刚好、听着舒服，能发挥出正常水平即可。</p>
+          </div>
+        </div>
+
+        <!-- 其他调整 -->
+        <div class="round">
+          <div class="round-header">
+            <span class="round-badge">补充</span>
+            <span class="round-title">其他调整</span>
+          </div>
+          <div class="round-content">
+            <p>如希望演唱时耳机监听人声大一些，但直播间输出时候不需要那么大（或反之），则可调整耳机中人声和伴奏的音量，来达到演唱中耳机声音比例听着舒服，且输出给观众的音量比例也合适。</p>
+          </div>
+        </div>
+
+        <!-- ====== DAW 效果调试 ====== -->
+        <h3 class="subsection-title" id="daw-effects">DAW 效果调试</h3>
+        <p style="margin-bottom:var(--space-lg);">按照轨道类型分别调试，以下为各轨道的处理建议。</p>
+
+        <!-- 人声轨 -->
+        <div class="track-block">
+          <div class="track-header">🎙️ 人声轨</div>
+          <div class="track-body">
+
+            <div class="effect-group">
+              <h4>降噪</h4>
+              <p>原则上越少越好，如果听不到明显底噪的可以不加。常用插件有 NS1、PSE（门限）、RX Voice.De-noise、Bertom.Denoiser。</p>
+              <div class="callout callout-warning">
+                <strong>注意：</strong>如果是乐器，请不要使用降噪。
+              </div>
+            </div>
+
+            <div class="effect-group">
+              <h4>修正音高（一般不用）</h4>
+              <p>使用 Autotune，要注意选低延迟模式。这个东西唱得好的不需要，音特别不准的它也没用。</p>
+            </div>
+
+            <div class="effect-group">
+              <h4>EQ 修复调整</h4>
+              <p>一般会加个低切，然后适当修复一些频段。常用插件如 FabFilter Q3。</p>
+            </div>
+
+            <div class="effect-group">
+              <h4>压缩</h4>
+              <p>对于直播的场景来说，只建议做控制动态的压缩。常用插件有 2A、76、RVOX、CL1B、Cenozoix.Compressor、670、API2500。</p>
+            </div>
+
+            <div class="effect-group">
+              <h4>其他——增加谐波染色</h4>
+              <p>带有染色功能的 EQ 或者其他插件。如 1073 的模拟话放染色、EQP-1A、Fresh Air、Roth-AIR、Maag EQ4、Black.Box.Analog、Saturn 2、SSL 通道条。</p>
+            </div>
+
+            <div class="effect-group">
+              <h4>去齿音</h4>
+              <p>如 FabFilter DS、sibilance。</p>
+            </div>
+
+            <div class="effect-group">
+              <h4>其他特殊效果</h4>
+              <p>如需要其他特殊效果，对应添加需要的效果器插件即可。如果没有特定类型的歌曲的需求（复古老歌、美声等），一般都以声音干净均衡为目标进行调整。</p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 发送空间效果轨 -->
+        <div class="track-block">
+          <div class="track-header">🌊 发送空间效果轨</div>
+          <div class="track-body">
+
+            <div class="effect-group">
+              <h4>混响</h4>
+              <p>人声一般可以用板式混响加大堂混响。常用插件有 Valhalla VintageVerb、pro-r、Gemini BM7、第七天堂。</p>
+              <p>混响上可以加大范围去齿音插件，来减少混响特别大的听感。</p>
+            </div>
+
+            <div class="effect-group">
+              <h4>高低切调整</h4>
+              <p>高切可改善声音的亮暗，低切可改善声音的湿润感和低频的堆积。</p>
+            </div>
+
+            <div class="effect-group">
+              <h4>Delay</h4>
+              <p>可有可无，因为每首歌速度不同，不可能每首歌都去调速度。</p>
+            </div>
+
+            <div class="effect-group">
+              <h4>侧链压缩</h4>
+              <p>长混响也可以加个侧链压缩，用人声压混响音量。</p>
+            </div>
+
+            <div class="effect-group">
+              <h4>乐器注意事项</h4>
+              <p>如果是乐器可以把混响中的 modulation 去掉。</p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 伴奏轨 -->
+        <div class="track-block">
+          <div class="track-header">🎹 伴奏轨</div>
+          <div class="track-body">
+
+            <div class="effect-group">
+              <h4>EQ / 频率闪避</h4>
+              <p>可以用 EQ 或频率闪避插件适当减少与人声冲突的频段。如 FabFilter Q3、Soundevice.Digital.VoxDucker、Trackspacer。</p>
+            </div>
+
+            <div class="effect-group">
+              <h4>变调</h4>
+              <p>变调插件不建议使用。一般用酷狗的伴奏功能，或者用全民 K 歌自带变调会方便。</p>
+            </div>
+
+            <div class="effect-group">
+              <h4>侧链压缩闪避</h4>
+              <p>也可以用侧链压缩做闪避效果，但要注意此时不可用延迟大的变调或其他插件。</p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 总线轨 -->
+        <div class="track-block">
+          <div class="track-header">📊 总线轨</div>
+          <div class="track-body">
+
+            <div class="effect-group">
+              <h4>压缩器 + 限制器</h4>
+              <p>常用插件有 Solid.State.Logic.Native.Bus.Compressor、PSPaudioware.PSP.Xenon、L2、软件自带的 limiter。</p>
+            </div>
+
+            <div class="effect-group">
+              <h4>响度目标</h4>
+              <p>配合前边人声动态的调整，副歌目标响度建议定在 -12 lufs 附近，峰值建议 -1dB。</p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ====== DAW 操作教学 ====== -->
+        <h3 class="subsection-title" id="daw-teaching">DAW 基本操作教学</h3>
+        <div class="knowledge-grid">
+          <div class="knowledge-card">
+            <h3>🎛️ 需要教会客户的操作</h3>
+            <ul class="bullet-list">
+              <li>人声音量大小调节</li>
+              <li>伴奏音量大小调节（也可以在音乐软件中调节）。在伴奏软件中音量大小还可以设置快捷键，以达到快速调节目的。</li>
+              <li>混响大小调节</li>
+              <li>各个轨道的静音和录制开关</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout callout-tip">
+          <strong>收尾：</strong>DAW 工程文件快捷方式放在桌面，方便客户快速打开。
+        </div>
+
+        <!-- ====== 开播前检查 ====== -->
+        <h3 class="subsection-title" id="pre-stream-check">帮客户总结开播前检查事项</h3>
+
+        <div class="checklist">
+
+          <div class="checklist-card">
+            <div class="checklist-header">
+              <span class="icon">①</span>检查声卡指示灯
+            </div>
+            <div class="checklist-body">
+              <p>电脑开机后查看声卡指示灯是否亮了。</p>
+              <div class="collapse-block" data-default="collapsed">
+                <button class="collapse-toggle">
+                  <span>如果不亮怎么办？</span>
+                  <span class="toggle-icon">▶</span>
+                </button>
+                <div class="collapse-content">
+                  <div class="collapse-inner">
+                    <p>请检查声卡 USB 线与电脑是否插好了。</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="checklist-card">
+            <div class="checklist-header">
+              <span class="icon">②</span>打开机架和伴奏软件，检查声音
+            </div>
+            <div class="checklist-body">
+              <p>打开机架，然后打开伴奏软件，检查是否能听到自己声音和伴奏。</p>
+              <div class="collapse-block" data-default="collapsed">
+                <button class="collapse-toggle">
+                  <span>听不到声音怎么办？</span>
+                  <span class="toggle-icon">▶</span>
+                </button>
+                <div class="collapse-content">
+                  <div class="collapse-inner">
+                    <ul class="bullet-list">
+                      <li>如果自己声音听不到，请检查机架中麦克风轨道监听是否打开。</li>
+                      <li>如伴奏听不到，请检查机架中伴奏轨道监听是否打开。</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="checklist-card">
+            <div class="checklist-header">
+              <span class="icon">③</span>检查伴奏轨道电平
+            </div>
+            <div class="checklist-body">
+              <p>检查机架中伴奏轨道电平是否跳动。</p>
+              <div class="collapse-block" data-default="collapsed">
+                <button class="collapse-toggle">
+                  <span>电平表不跳动怎么办？</span>
+                  <span class="toggle-icon">▶</span>
+                </button>
+                <div class="collapse-content">
+                  <div class="collapse-inner">
+                    <p>请检查伴奏软件中通道是否正确。</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="checklist-card">
+            <div class="checklist-header">
+              <span class="icon">④</span>检查直播伴侣麦克风
+            </div>
+            <div class="checklist-body">
+              <p>打开直播伴侣，检查麦克风图标是否有跳动。</p>
+              <div class="collapse-block" data-default="collapsed">
+                <button class="collapse-toggle">
+                  <span>麦克风图标无响应怎么办？</span>
+                  <span class="toggle-icon">▶</span>
+                </button>
+                <div class="collapse-content">
+                  <div class="collapse-inner">
+                    <p>请调整直播伴侣中的麦克风通道。</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ============================================
+           第六章：备份
+           ============================================ -->
+      <section class="section" id="backup">
+        <h2 class="section-title"><span class="section-num">6</span>备份</h2>
+
+        <div class="backup-list">
+          <div class="backup-item">
+            <span class="check-icon"></span>
+            <span class="text">DAW 的工程文件备份。</span>
+          </div>
+          <div class="backup-item">
+            <span class="check-icon"></span>
+            <span class="text">某个软件突然没声了，可按照截图恢复——各个音乐软件的通道截图、直播软件的通道截图。</span>
+          </div>
+          <div class="backup-item">
+            <span class="check-icon"></span>
+            <span class="text">声卡路由和驱动页面备份（如有）。没有实体文件存储备份的可以截图。</span>
+          </div>
+          <div class="backup-item">
+            <span class="check-icon"></span>
+            <span class="text">请客户拍照保存声卡旋钮部分和接线照片。</span>
+          </div>
+          <div class="backup-item">
+            <span class="check-icon"></span>
+            <span class="text">请客户重启电脑，试试各个软件使用是否有问题，如有问题及时解决。</span>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- 返回顶部 -->
+  <button class="back-to-top" id="backToTop" aria-label="返回顶部">↑</button>
+
+  <script src="js/progress.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/collapse.js"></script>
+</body>
+</html>
