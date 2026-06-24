@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>声卡调试指南</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/components.css">
@@ -13,18 +16,43 @@
   <!-- 顶部阅读进度条 -->
   <div class="progress-bar" id="progressBar"></div>
 
-  <!-- 移动端导航按钮 -->
-  <button class="nav-toggle" id="navToggle" aria-label="打开目录">☰</button>
+  <!-- 固定顶栏 -->
+  <header class="topbar">
+    <button class="nav-toggle" id="navToggle" aria-label="打开目录">☰</button>
+    <span class="topbar-title">声卡调试指南</span>
+  </header>
 
   <!-- 移动端遮罩 -->
   <div class="nav-overlay" id="navOverlay"></div>
+
+  <!-- ====== Hero 区域 ====== -->
+  <section class="hero">
+    <div class="hero-wave" id="heroWave"></div>
+    <span class="hero-tag">Audio Engineering Guide</span>
+    <h1 class="hero-title">声卡调试<span class="accent">指南</span></h1>
+    <p class="hero-subtitle">从沟通到备份，完整的声卡调试全流程。让小白快速获得一份自己满意的声音。</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">6</div>
+        <div class="hero-stat-label">章节</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">6</div>
+        <div class="hero-stat-label">配置步骤</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">4</div>
+        <div class="hero-stat-label">试唱轮次</div>
+      </div>
+    </div>
+  </section>
 
   <div class="layout">
 
     <!-- ====== 侧边栏目录 ====== -->
     <aside class="sidebar" id="sidebar">
       <nav class="toc">
-        <h2 class="toc-title">声卡调试指南</h2>
+        <h2 class="toc-title">目录导航</h2>
         <ul>
           <li><a href="#preface">前言</a></li>
           <li><a href="#pre-communication">调试前沟通</a></li>
@@ -58,7 +86,7 @@
       <!-- ============================================
            第一章：前言
            ============================================ -->
-      <section class="section" id="preface">
+      <section class="section reveal" id="preface">
         <h2 class="section-title"><span class="section-num">1</span>前言</h2>
         <div class="intro-cards">
           <div class="intro-card">
@@ -76,7 +104,7 @@
       <!-- ============================================
            第二章：调试前沟通
            ============================================ -->
-      <section class="section" id="pre-communication">
+      <section class="section reveal" id="pre-communication">
         <h2 class="section-title"><span class="section-num">2</span>调试前沟通</h2>
 
         <div class="checklist">
@@ -223,7 +251,7 @@
       <!-- ============================================
            第三章：软件安装与配置
            ============================================ -->
-      <section class="section" id="software-config">
+      <section class="section reveal" id="software-config">
         <h2 class="section-title"><span class="section-num">3</span>调试：软件安装与配置</h2>
 
         <!-- Step 1: 设备连接 -->
@@ -361,7 +389,7 @@
           <div class="step-content">
 
             <!-- 5a 声卡路由 -->
-            <h4 style="color:var(--text-primary);font-size:var(--font-base);margin-bottom:var(--space-xs);">声卡音频信号路由</h4>
+            <h4>声卡音频信号路由</h4>
             <div class="collapse-block" data-default="collapsed">
               <button class="collapse-toggle">
                 <span>设置详情</span>
@@ -382,7 +410,7 @@
             </div>
 
             <!-- 5b 音乐软件通道 -->
-            <h4 style="color:var(--text-primary);font-size:var(--font-base);margin:var(--space-md) 0 var(--space-xs);">音乐软件播放通道设置</h4>
+            <h4 style="margin-top:var(--space-md);">音乐软件播放通道设置</h4>
             <div class="collapse-block" data-default="collapsed">
               <button class="collapse-toggle">
                 <span>设置详情</span>
@@ -399,7 +427,7 @@
             </div>
 
             <!-- 5c 直播软件通道 -->
-            <h4 style="color:var(--text-primary);font-size:var(--font-base);margin:var(--space-md) 0 var(--space-xs);">直播软件通道设置</h4>
+            <h4 style="margin-top:var(--space-md);">直播软件通道设置</h4>
             <div class="collapse-block" data-default="collapsed">
               <button class="collapse-toggle">
                 <span>设置详情</span>
@@ -455,7 +483,7 @@
       <!-- ============================================
            第四章：设备知识教学
            ============================================ -->
-      <section class="section" id="device-knowledge">
+      <section class="section reveal" id="device-knowledge">
         <h2 class="section-title"><span class="section-num">4</span>简单的设备知识教学</h2>
 
         <div class="knowledge-grid">
@@ -490,7 +518,7 @@
       <!-- ============================================
            第五章：试唱与调试
            ============================================ -->
-      <section class="section" id="trial-debug">
+      <section class="section reveal" id="trial-debug">
         <h2 class="section-title"><span class="section-num">5</span>试唱与调试</h2>
 
         <!-- ====== 试唱流程 ====== -->
@@ -818,7 +846,7 @@
       <!-- ============================================
            第六章：备份
            ============================================ -->
-      <section class="section" id="backup">
+      <section class="section reveal" id="backup">
         <h2 class="section-title"><span class="section-num">6</span>备份</h2>
 
         <div class="backup-list">
@@ -854,5 +882,6 @@
   <script src="js/progress.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/collapse.js"></script>
+  <script src="js/animations.js"></script>
 </body>
 </html>

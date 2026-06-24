@@ -1,5 +1,6 @@
 /* ============================================
-   reset.css — 样式重置 + CSS 变量定义
+   reset.css — 音频霓虹风设计系统
+   Audio Neon Theme
    ============================================ */
 
 /* --- Reset --- */
@@ -21,6 +22,7 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 img, svg {
@@ -45,37 +47,57 @@ ul, ol {
   list-style: none;
 }
 
-/* --- CSS Variables: 暗色暖调 --- */
+/* ============================================
+   CSS Variables: Audio Neon
+   ============================================ */
 :root {
-  /* 背景层次 */
-  --bg-primary: #1a1714;
-  --bg-secondary: #252119;
-  --bg-tertiary: #2e2920;
+  /* 背景层次 — 极深蓝黑 */
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #12121a;
+  --bg-tertiary: #1a1a2e;
+  --bg-glass: rgba(18, 18, 30, 0.6);
+  --bg-glass-hover: rgba(26, 26, 46, 0.8);
 
-  /* 强调色 */
-  --accent: #d4915a;
-  --accent-hover: #e0a06a;
-  --accent-muted: #8b6f4e;
+  /* 霓虹色系 */
+  --neon-blue: #0066ff;
+  --neon-blue-light: #3d8bff;
+  --neon-cyan: #00ffff;
+  --neon-purple: #7c3aed;
+  --neon-pink: #ff0080;
+  --neon-green: #00ff88;
+
+  /* 发光效果 */
+  --glow-blue: 0 0 20px rgba(0, 102, 255, 0.4);
+  --glow-cyan: 0 0 20px rgba(0, 255, 255, 0.3);
+  --glow-purple: 0 0 20px rgba(124, 58, 237, 0.3);
+  --glow-pink: 0 0 20px rgba(255, 0, 128, 0.3);
+
+  /* 半透明色 */
+  --blue-alpha: rgba(0, 102, 255, 0.15);
+  --cyan-alpha: rgba(0, 255, 255, 0.1);
+  --purple-alpha: rgba(124, 58, 237, 0.15);
+  --pink-alpha: rgba(255, 0, 128, 0.1);
 
   /* 文字 */
-  --text-primary: #e8e0d5;
-  --text-secondary: #b8a890;
-  --text-muted: #7a6e5e;
+  --text-primary: #ffffff;
+  --text-secondary: #b0b0c8;
+  --text-muted: #606078;
 
   /* 边框 */
-  --border: #3a342a;
-  --border-light: #4a4438;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-light: rgba(255, 255, 255, 0.15);
+  --border-glow: rgba(0, 102, 255, 0.3);
 
   /* Callout */
-  --tip-color: #8ab07a;
-  --tip-bg: #232a1e;
-  --tip-border: #3a4a30;
-  --warning-color: #d4a84e;
-  --warning-bg: #2a2418;
-  --warning-border: #4a4030;
-  --important-color: #d4786a;
-  --important-bg: #2a201e;
-  --important-border: #4a302a;
+  --tip-color: #00ffff;
+  --tip-bg: rgba(0, 255, 255, 0.06);
+  --tip-border: rgba(0, 255, 255, 0.25);
+  --warning-color: #ffaa00;
+  --warning-bg: rgba(255, 170, 0, 0.06);
+  --warning-border: rgba(255, 170, 0, 0.25);
+  --important-color: #ff4466;
+  --important-bg: rgba(255, 68, 102, 0.06);
+  --important-border: rgba(255, 68, 102, 0.25);
 
   /* 间距 */
   --space-xs: 0.5rem;
@@ -84,6 +106,7 @@ ul, ol {
   --space-lg: 1.5rem;
   --space-xl: 2rem;
   --space-2xl: 3rem;
+  --space-3xl: 4rem;
 
   /* 字号 */
   --font-xs: 0.8125rem;
@@ -92,50 +115,63 @@ ul, ol {
   --font-md: 1.125rem;
   --font-lg: 1.375rem;
   --font-xl: 1.75rem;
-  --font-2xl: 2.25rem;
+  --font-2xl: 2.5rem;
+  --font-3xl: 3.5rem;
 
   /* 圆角 */
   --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 999px;
 
   /* 过渡 */
-  --transition: 0.25s ease;
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 0.15s ease;
 
   /* 侧边栏宽度 */
-  --sidebar-width: 260px;
+  --sidebar-width: 280px;
+  --topbar-height: 60px;
 
   /* 字体 */
-  --font-sans: -apple-system, "PingFang SC", "Noto Sans SC", "Microsoft YaHei",
-               "Segoe UI", sans-serif;
+  --font-display: "Rajdhani", "Segoe UI", "PingFang SC", "Noto Sans SC",
+                  "Microsoft YaHei", sans-serif;
+  --font-body: "Inter", -apple-system, "PingFang SC", "Noto Sans SC",
+               "Microsoft YaHei", "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", "Cascadia Code", "Consolas", monospace;
 }
 
 /* --- 基础排版 --- */
 body {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: var(--font-base);
   color: var(--text-primary);
   background: var(--bg-primary);
+  /* 微妙的网格背景 */
+  background-image:
+    radial-gradient(ellipse at top, rgba(0, 102, 255, 0.08), transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(124, 58, 237, 0.05), transparent 50%);
+  background-attachment: fixed;
 }
 
 /* 选中文字颜色 */
 ::selection {
-  background: var(--accent);
-  color: var(--bg-primary);
+  background: var(--neon-blue);
+  color: #fff;
+  text-shadow: 0 0 8px rgba(0, 102, 255, 0.6);
 }
 
 /* 滚动条 */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: var(--bg-primary);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border-light);
-  border-radius: 4px;
+  background: linear-gradient(180deg, var(--neon-blue), var(--neon-purple));
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-muted);
+  background: linear-gradient(180deg, var(--neon-cyan), var(--neon-blue));
 }
